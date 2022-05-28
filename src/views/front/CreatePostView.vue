@@ -1,7 +1,7 @@
 <template>
   <h1 class="header">張貼動態</h1>
 
-  <form class="card p-md-8" ref="postForm" @submit="createPost">
+  <form class="card p-md-8" ref="postForm" @submit.prevent="createPost">
     <div class="mb-4">
       <label for="content" class="form-label">貼文內容</label>
       <textarea
