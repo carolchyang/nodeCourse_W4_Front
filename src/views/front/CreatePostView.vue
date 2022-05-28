@@ -51,31 +51,33 @@ export default {
   },
   methods: {
     createPost() {
-      this.message = "";
+      const vm = this;
 
-      if (this.tempPost.content == "") {
-        this.message = "貼文內容不得為空";
+      vm.message = "";
+
+      if (vm.tempPost.content == "") {
+        vm.message = "貼文內容不得為空";
         return;
       }
 
-      if (this.tempPost.image !== "" && !isValidUrl(this.tempPost.image)) {
-        this.message = "請填寫正確圖片網址";
+      if (vm.tempPost.image !== "" && !isValidUrl(vm.tempPost.image)) {
+        vm.message = "請填寫正確圖片網址";
         return;
       }
 
-      this.$http
-        .post(`${process.env.VUE_APP_API}/post`, this.tempPost)
+      vm.$http
+        .post(`${process.env.VUE_APP_API}/post`, vm.tempPost)
         .then(() => {
-          this.$refs.postForm.reset();
-          this.$router.push("/");
-          this.$emitter.emit("toggle-loading", false);
+          vm.$refs.postForm.reset();
+          vm.$router.push("/");
+          vm.$emitter.emit("toggle-loading", false);
         })
         .catch((err) => {
-          this.$pushMessage({
+          vm.$pushMessage({
             style: "danger",
             content: err.response.data.message || "建立貼文失敗",
           });
-          this.$emitter.emit("toggle-loading", false);
+          vm.$emitter.emit("toggle-loading", false);
         });
     },
   },
