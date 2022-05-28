@@ -51,34 +51,31 @@ export default {
   },
   methods: {
     createPost() {
-      const vm = this;
+      this.message = "";
 
-      vm.message = "";
-
-      if (vm.tempPost.content == "") {
-        vm.message = "貼文內容不得為空";
-        return;
-      }
-
-      if (vm.tempPost.image !== "" && !isValidUrl(vm.tempPost.image)) {
-        vm.message = "請填寫正確圖片網址";
-        return;
-      }
-
-      vm.$http
-        .post(`${process.env.VUE_APP_API}/post`, vm.tempPost)
-        .then(() => {
-          vm.$refs.postForm.reset();
-          vm.$router.push("/");
-          vm.$emitter.emit("toggle-loading", false);
-        })
-        .catch((err) => {
-          vm.$pushMessage({
-            style: "danger",
-            content: err.response.data.message || "建立貼文失敗",
+      if (this.tempPost.content == "") {
+        this.message = "貼文內容不得為空";
+      } else if (
+        this.tempPost.image !== "" &&
+        !isValidUrl(this.tempPost.image)
+      ) {
+        this.message = "請填寫正確圖片網址";
+      } else {
+        this.$http
+          .post(`${process.env.VUE_APP_API}/post`, this.tempPost)
+          .then(() => {
+            this.$refs.postForm.reset();
+            this.$router.push("/");
+            this.$emitter.emit("toggle-loading", false);
+          })
+          .catch((err) => {
+            this.$pushMessage({
+              style: "danger",
+              content: err.response.data.message || "建立貼文失敗",
+            });
+            this.$emitter.emit("toggle-loading", false);
           });
-          vm.$emitter.emit("toggle-loading", false);
-        });
+      }
     },
   },
 };
