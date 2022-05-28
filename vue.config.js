@@ -3,4 +3,12 @@ module.exports = defineConfig({
   transpileDependencies: true,
   publicPath:
     process.env.NODE_ENV === "production" ? "/nodeCourse_W4_Front/" : "/",
+  configureWebpack: {
+    optimization: {
+      splitChunks: {
+        minSize: 200000,
+        maxSize: 250000,
+      },
+    },
+  },
 });
