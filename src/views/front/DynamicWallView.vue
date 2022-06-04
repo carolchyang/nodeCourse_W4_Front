@@ -34,7 +34,7 @@
         <img
           :src="item.user?.photo"
           class="thumbnail thumbnail-xl"
-          v-if="item.user.photo"
+          v-if="item.user?.photo"
         />
         <img
           src="../../assets/images/user_default.png"
@@ -43,7 +43,7 @@
         />
         <div class="fw-bold ms-4">
           <router-link to="/personalwall" class="link-dark">
-            {{ item.user.name }}
+            {{ item.user?.name }}
           </router-link>
           <span class="d-block text-light fs-7 fw-normal">
             {{ $getTime(item.createdAt) }}
@@ -63,10 +63,7 @@
     </li>
   </ul>
 
-  <div
-    class="bg-white border border-2 rounded shadow-sm"
-    v-if="data.length == 0"
-  >
+  <div class="bg-white border border-2 rounded shadow-sm" v-if="!data.length">
     <div class="p-4 border-bottom border-2 border-dark">
       <ul class="d-flex">
         <li class="circle me-2"></li>
